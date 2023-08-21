@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+//import 'package:stepper_example_app/vivan_stepper.dart';
 
-/// Flutter code sample for [Stepper].
 
-void main() => runApp(const StepperExampleApp());
+void main() => runApp(const ExampleApp());
 
-class StepperExampleApp extends StatelessWidget {
-  const StepperExampleApp({Key? key}) : super(key: key);
+class ExampleApp extends StatelessWidget {
+  const ExampleApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,71 +13,128 @@ class StepperExampleApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: const Text('Stepper Sample')),
         body: const Center(
-          child: StepperExample(),
+          child: Example(),
         ),
       ),
     );
   }
 }
 
-class StepperExample extends StatefulWidget {
-  const StepperExample({Key? key}) : super(key: key);
+class Example extends StatefulWidget {
+  const Example({Key? key}) : super(key: key);
 
   @override
-  State<StepperExample> createState() => _StepperExampleState();
+  State<Example> createState() => _ExampleState();
 }
 
-class _StepperExampleState extends State<StepperExample> {
+class _ExampleState extends State<Example> {
   int _index = 0;
+  final activeColor = Color(0xFF000041);
 
-  final List<Step> steps = [
-    Step(
-      label: Text("Checking sequencing data"),
+  final List<VivanStep> steps = [
+    VivanStep(
+      isActive: false,
+      label: Text(
+        "Checking sequencing data",
+        style: TextStyle(color: Colors.grey),
+      ),
       title: SizedBox.shrink(),
       content: Text("Content for Step 1"),
-      state: StepState.editing,
+      state: VivanStepState.editing,
     ),
-    Step(
-      label: Text("Sequencing data OK"),
+    VivanStep(
+      isActive: false,
+      label: Text(
+        "Sequencing data OK",
+        style: TextStyle(color: Colors.grey),
+      ),
       title: SizedBox.shrink(),
       content: Text("Test"),
-      state: StepState.complete,
+      state: VivanStepState.complete,
     ),
-    Step(
-      label: Text("Analysing sequencing data"),
+    VivanStep(
+      isActive: false,
+      label: Text(
+        "Download sequencing report",
+        style: TextStyle(color: Colors.grey),
+      ),
       title: SizedBox.shrink(),
       content: Text("Content for Step 3"),
-      state: StepState.editing,
+      state: VivanStepState.editing,
     ),
-    Step(
+    VivanStep(
+      isActive: true,
       label: Text("Download recommendations treatment report"),
       title: SizedBox.shrink(),
       content: Text("Content for Step 4"),
-      state: StepState.complete,
+      state: VivanStepState.complete,
     ),
   ];
 
-  Widget customIconBuilder(int index, StepState stepState) {
+  Widget customIconBuilder(int index, dynamic) {
     final label = steps[index].label as Text;
+    final isActive = steps[index].isActive;
+    final customBorderColor = Color(0xFF00BEB9);
 
+    Color iconColor;
+    if (label.data?.startsWith("Download") ?? false || isActive) {
+      iconColor = activeColor;
+    } else {
+      iconColor = Colors.grey;
+    }
+
+    Icon icon;
     switch (label.data) {
       case "Checking sequencing data":
-        return const Icon(Icons.science_outlined);
+        icon = Icon(Icons.science_outlined, color: iconColor);
+        break;
       case "Download recommendations treatment report":
-        return const Icon(Icons.task_outlined);
-      case "Analysing sequencing data":
-        return const Icon(Icons.query_stats_outlined);
+        icon = Icon(Icons.task_outlined, color: iconColor);
+        break;
+      case "Download sequencing report":
+        icon = Icon(Icons.file_download_outlined, color: iconColor);
+        break;
       case "Sequencing data OK":
-        return const Icon(Icons.thumb_up_alt_outlined);
+        icon = Icon(Icons.thumb_up_alt_outlined, color: iconColor);
+        break;
       default:
-        return const Icon(Icons.question_mark_outlined);
+        icon = Icon(Icons.question_mark_outlined, color: iconColor);
+        break;
     }
+
+    BoxDecoration decoration = BoxDecoration(
+      color: Colors.white,
+      shape: BoxShape.circle,
+    );
+
+    //The below 'Stack' is to cover the default grey circle on the steps
+    final iconWidget = Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        Container(
+          width: 24,
+          height: 24,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+          ),
+        ),
+        icon,
+      ],
+    );
+
+    return isActive
+        ? iconWidget
+        : MouseRegion(
+            onHover: (event) {},
+            child: iconWidget,
+          );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stepper(
-      type: StepperType.horizontal,
+    return VivanStepper(
+      type: VivanStepperType.horizontal,
       stepIconBuilder: customIconBuilder,
       currentStep: _index,
       onStepCancel: () {
@@ -95,9 +152,11 @@ class _StepperExampleState extends State<StepperExample> {
         }
       },
       onStepTapped: (int index) {
-        setState(() {
-          _index = index;
-        });
+        if (steps[index].isActive) {
+          setState(() {
+            _index = index;
+          });
+        }
       },
       steps: steps,
     );
