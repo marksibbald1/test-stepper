@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'package:stepper_example_app/vivan_stepper.dart';
 
-
 void main() => runApp(const ExampleApp());
 
 class ExampleApp extends StatelessWidget {
@@ -31,45 +30,56 @@ class _ExampleState extends State<Example> {
   int _index = 0;
   final activeColor = Color(0xFF000041);
 
-  final List<VivanStep> steps = [
-    VivanStep(
-      isActive: false,
-      label: Text(
-        "Checking sequencing data",
-        style: TextStyle(color: Colors.grey),
-      ),
-      title: SizedBox.shrink(),
-      content: Text("Content for Step 1"),
-      state: VivanStepState.editing,
+final List<VivanStep> steps = [
+  VivanStep(
+    isActive: false,
+    label: Text(
+      "Checking sequencing data",
+      style: TextStyle(color: Colors.grey),
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
     ),
-    VivanStep(
-      isActive: false,
-      label: Text(
-        "Sequencing data OK",
-        style: TextStyle(color: Colors.grey),
-      ),
-      title: SizedBox.shrink(),
-      content: Text("Test"),
-      state: VivanStepState.complete,
+    title: SizedBox.shrink(),
+    content: Text("Content for Step 1"),
+    state: VivanStepState.editing,
+  ),
+  VivanStep(
+    isActive: false,
+    label: Text(
+      "Sequencing data OK",
+      style: TextStyle(color: Colors.grey),
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
     ),
-    VivanStep(
-      isActive: false,
-      label: Text(
-        "Download sequencing report",
-        style: TextStyle(color: Colors.grey),
-      ),
-      title: SizedBox.shrink(),
-      content: Text("Content for Step 3"),
-      state: VivanStepState.editing,
+    title: SizedBox.shrink(),
+    content: Text("Test"),
+    state: VivanStepState.complete,
+  ),
+  VivanStep(
+    isActive: false,
+    label: Text(
+      "Download sequencing report",
+      style: TextStyle(color: Colors.grey),
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
     ),
-    VivanStep(
-      isActive: true,
-      label: Text("Download recommendations treatment report"),
-      title: SizedBox.shrink(),
-      content: Text("Content for Step 4"),
-      state: VivanStepState.complete,
+    title: SizedBox.shrink(),
+    content: Text("Content for Step 3"),
+    state: VivanStepState.editing,
+  ),
+  VivanStep(
+    isActive: true,
+    label: Text(
+      "Download recommendations treatment report",
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
     ),
-  ];
+    title: SizedBox.shrink(),
+    content: Text("Content for Step 4"),
+    state: VivanStepState.complete,
+  ),
+];
+
 
   Widget customIconBuilder(int index, dynamic) {
     final label = steps[index].label as Text;

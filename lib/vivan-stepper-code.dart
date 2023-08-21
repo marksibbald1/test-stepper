@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'button_style.dart';
@@ -68,6 +69,7 @@ class VivanControlsDetails {
     this.onStepCancel,
     this.onStepContinue,
   });
+
   /// Index that is active for the surrounding [VivanStepper] widget. This may be
   /// different from [stepIndex] if the user has just changed steps and we are
   /// currently animating toward that step.
@@ -104,11 +106,13 @@ class VivanControlsDetails {
 /// See also:
 ///
 ///  * [WidgetBuilder], which is similar but only takes a [BuildContext].
-typedef VivanControlsWidgetBuilder = Widget Function(BuildContext context, VivanControlsDetails details);
+typedef VivanControlsWidgetBuilder = Widget Function(
+    BuildContext context, VivanControlsDetails details);
 
 /// A builder that creates the icon widget for the [VivanStep] at [stepIndex], given
 /// [stepState].
-typedef VivanStepIconBuilder = Widget? Function(int stepIndex, VivanStepState stepState);
+typedef VivanStepIconBuilder = Widget? Function(
+    int stepIndex, VivanStepState stepState);
 
 const TextStyle _kStepStyle = TextStyle(
   fontSize: 12.0,
@@ -121,7 +125,8 @@ const Color _kCircleActiveDark = Colors.black87;
 const Color _kDisabledLight = Colors.black38;
 const Color _kDisabledDark = Colors.white38;
 const double _kStepSize = 24.0;
-const double _kTriangleHeight = _kStepSize * 0.866025; // Triangle height. sqrt(3.0) / 2.0
+const double _kTriangleHeight =
+    _kStepSize * 0.866025; // Triangle height. sqrt(3.0) / 2.0
 
 /// A material step used in [VivanStepper]. The step can have a title and subtitle,
 /// an icon within its circle, some content and a state that governs its
@@ -384,7 +389,8 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
   }
 
   Widget _buildCircleChild(int index, bool oldState) {
-    final VivanStepState state = oldState ? _oldStates[index]! : widget.steps[index].state;
+    final VivanStepState state =
+        oldState ? _oldStates[index]! : widget.steps[index].state;
     final bool isDarkActive = _isDark() && widget.steps[index].isActive;
     final Widget? icon = widget.stepIconBuilder?.call(index, state);
     if (icon != null) {
@@ -395,7 +401,9 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
       case VivanStepState.disabled:
         return Text(
           '${index + 1}',
-          style: isDarkActive ? _kStepStyle.copyWith(color: Colors.black87) : _kStepStyle,
+          style: isDarkActive
+              ? _kStepStyle.copyWith(color: Colors.black87)
+              : _kStepStyle,
         );
       case VivanStepState.editing:
         return Icon(
@@ -417,9 +425,13 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
   Color _circleColor(int index) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     if (!_isDark()) {
-      return widget.steps[index].isActive ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.38);
+      return widget.steps[index].isActive
+          ? colorScheme.primary
+          : colorScheme.onSurface.withOpacity(0.38);
     } else {
-      return widget.steps[index].isActive ? colorScheme.secondary : colorScheme.background;
+      return widget.steps[index].isActive
+          ? colorScheme.secondary
+          : colorScheme.background;
     }
   }
 
@@ -436,7 +448,8 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
           shape: BoxShape.circle,
         ),
         child: Center(
-          child: _buildCircleChild(index, oldState && widget.steps[index].state == VivanStepState.error),
+          child: _buildCircleChild(index,
+              oldState && widget.steps[index].state == VivanStepState.error),
         ),
       ),
     );
@@ -450,14 +463,19 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
       child: Center(
         child: SizedBox(
           width: _kStepSize,
-          height: _kTriangleHeight, // Height of 24dp-long-sided equilateral triangle.
+          height:
+              _kTriangleHeight, // Height of 24dp-long-sided equilateral triangle.
           child: CustomPaint(
             painter: _TrianglePainter(
               color: _isDark() ? _kErrorDark : _kErrorLight,
             ),
             child: Align(
-              alignment: const Alignment(0.0, 0.8), // 0.8 looks better than the geometrical 0.33.
-              child: _buildCircleChild(index, oldState && widget.steps[index].state != VivanStepState.error),
+              alignment: const Alignment(
+                  0.0, 0.8), // 0.8 looks better than the geometrical 0.33.
+              child: _buildCircleChild(
+                  index,
+                  oldState &&
+                      widget.steps[index].state != VivanStepState.error),
             ),
           ),
         ),
@@ -473,7 +491,9 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
         firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
         secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
         sizeCurve: Curves.fastOutSlowIn,
-        crossFadeState: widget.steps[index].state == VivanStepState.error ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+        crossFadeState: widget.steps[index].state == VivanStepState.error
+            ? CrossFadeState.showSecond
+            : CrossFadeState.showFirst,
         duration: kThemeAnimationDuration,
       );
     } else {
@@ -508,9 +528,11 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
 
     final ThemeData themeData = Theme.of(context);
     final ColorScheme colorScheme = themeData.colorScheme;
-    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    final MaterialLocalizations localizations =
+        MaterialLocalizations.of(context);
 
-    const OutlinedBorder buttonShape = RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2)));
+    const OutlinedBorder buttonShape = RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(2)));
     const EdgeInsets buttonPadding = EdgeInsets.symmetric(horizontal: 16.0);
 
     return Container(
@@ -525,20 +547,28 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
             TextButton(
               onPressed: widget.onStepContinue,
               style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled) ? null : (_isDark() ? colorScheme.onSurface : colorScheme.onPrimary);
+                foregroundColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.disabled)
+                      ? null
+                      : (_isDark()
+                          ? colorScheme.onSurface
+                          : colorScheme.onPrimary);
                 }),
-                backgroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                  return _isDark() || states.contains(MaterialState.disabled) ? null : colorScheme.primary;
+                backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                  return _isDark() || states.contains(MaterialState.disabled)
+                      ? null
+                      : colorScheme.primary;
                 }),
-                padding: const MaterialStatePropertyAll<EdgeInsetsGeometry>(buttonPadding),
-                shape: const MaterialStatePropertyAll<OutlinedBorder>(buttonShape),
+                padding: const MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                    buttonPadding),
+                shape:
+                    const MaterialStatePropertyAll<OutlinedBorder>(buttonShape),
               ),
-              child: Text(
-                themeData.useMaterial3
+              child: Text(themeData.useMaterial3
                   ? localizations.continueButtonLabel
-                  : localizations.continueButtonLabel.toUpperCase()
-              ),
+                  : localizations.continueButtonLabel.toUpperCase()),
             ),
             Container(
               margin: const EdgeInsetsDirectional.only(start: 8.0),
@@ -549,11 +579,9 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
                   padding: buttonPadding,
                   shape: buttonShape,
                 ),
-                child: Text(
-                  themeData.useMaterial3
+                child: Text(themeData.useMaterial3
                     ? localizations.cancelButtonLabel
-                    : localizations.cancelButtonLabel.toUpperCase()
-                ),
+                    : localizations.cancelButtonLabel.toUpperCase()),
               ),
             ),
           ],
@@ -647,16 +675,19 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildLabelText(int index) {
-    if (widget.steps[index].label != null) {
-      return AnimatedDefaultTextStyle(
+Widget _buildLabelText(int index) {
+  if (widget.steps[index].label != null) {
+    return Container(
+      width: 100,  
+      child: AnimatedDefaultTextStyle(
         style: _labelStyle(index),
         duration: kThemeAnimationDuration,
         child: widget.steps[index].label!,
-      );
-    }
-    return const SizedBox.shrink();
+      ),
+    );
   }
+  return const SizedBox.shrink();
+}
 
   Widget _buildVerticalHeader(int index) {
     return Container(
@@ -705,11 +736,12 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
         AnimatedCrossFade(
           firstChild: Container(height: 0.0),
           secondChild: Container(
-            margin: widget.margin ?? const EdgeInsetsDirectional.only(
-              start: 60.0,
-              end: 24.0,
-              bottom: 24.0,
-            ),
+            margin: widget.margin ??
+                const EdgeInsetsDirectional.only(
+                  start: 60.0,
+                  end: 24.0,
+                  bottom: 24.0,
+                ),
             child: Column(
               children: <Widget>[
                 widget.steps[index].content,
@@ -720,7 +752,9 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
           firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
           secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
           sizeCurve: Curves.fastOutSlowIn,
-          crossFadeState: _isCurrent(index) ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          crossFadeState: _isCurrent(index)
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
           duration: kThemeAnimationDuration,
         ),
       ],
@@ -737,18 +771,21 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
             key: _keys[i],
             children: <Widget>[
               InkWell(
-                onTap: widget.steps[i].state != VivanStepState.disabled ? () {
-                  // In the vertical case we need to scroll to the newly tapped
-                  // step.
-                  Scrollable.ensureVisible(
-                    _keys[i].currentContext!,
-                    curve: Curves.fastOutSlowIn,
-                    duration: kThemeAnimationDuration,
-                  );
+                onTap: widget.steps[i].state != VivanStepState.disabled
+                    ? () {
+                        // In the vertical case we need to scroll to the newly tapped
+                        // step.
+                        Scrollable.ensureVisible(
+                          _keys[i].currentContext!,
+                          curve: Curves.fastOutSlowIn,
+                          duration: kThemeAnimationDuration,
+                        );
 
-                  widget.onStepTapped?.call(i);
-                } : null,
-                canRequestFocus: widget.steps[i].state != VivanStepState.disabled,
+                        widget.onStepTapped?.call(i);
+                      }
+                    : null,
+                canRequestFocus:
+                    widget.steps[i].state != VivanStepState.disabled,
                 child: _buildVerticalHeader(i),
               ),
               _buildVerticalBody(i),
@@ -761,31 +798,42 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
   Widget _buildHorizontal() {
     final List<Widget> children = <Widget>[
       for (int i = 0; i < widget.steps.length; i += 1) ...<Widget>[
-        InkResponse(
-          onTap: widget.steps[i].state != VivanStepState.disabled ? () {
-            widget.onStepTapped?.call(i);
-          } : null,
-          canRequestFocus: widget.steps[i].state != VivanStepState.disabled,
-          child: Row(
-            children: <Widget>[
-              SizedBox(
-                height: _isLabel() ? 104.0 : 72.0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    if (widget.steps[i].label != null) const SizedBox(height: 24.0,),
-                    Center(child: _buildIcon(i)),
-                    if (widget.steps[i].label != null) SizedBox(height : 24.0, child: _buildLabelText(i),),
-                  ],
-                ),
+        SizedBox(
+            width: 150,
+            child: InkResponse(
+              onTap: widget.steps[i].state != VivanStepState.disabled
+                  ? () {
+                      widget.onStepTapped?.call(i);
+                    }
+                  : null,
+              canRequestFocus: widget.steps[i].state != VivanStepState.disabled,
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                    height: _isLabel() ? 140.0 : 72.0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        if (widget.steps[i].label != null)
+                          const SizedBox(
+                            height: 24.0,
+                          ),
+                        Center(child: _buildIcon(i)),
+                        if (widget.steps[i].label != null)
+                          SizedBox(
+                            height: 34.0,
+                            child: _buildLabelText(i),
+                          ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsetsDirectional.only(start: 12.0),
+                    child: _buildHeaderText(i),
+                  ),
+                ],
               ),
-              Container(
-                margin: const EdgeInsetsDirectional.only(start: 12.0),
-                child: _buildHeaderText(i),
-              ),
-            ],
-          ),
-        ),
+            )),
         if (!_isLast(i))
           Expanded(
             child: Container(
@@ -827,7 +875,9 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
               AnimatedSize(
                 curve: Curves.fastOutSlowIn,
                 duration: kThemeAnimationDuration,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: stepPanels),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: stepPanels),
               ),
               _buildVerticalControls(widget.currentStep),
             ],
