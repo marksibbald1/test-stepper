@@ -124,7 +124,7 @@ const Color _kCircleActiveLight = Colors.white;
 const Color _kCircleActiveDark = Colors.black87;
 const Color _kDisabledLight = Colors.black38;
 const Color _kDisabledDark = Colors.white38;
-const double _kStepSize = 24.0;
+const double _kStepSize = 44.0;
 const double _kTriangleHeight =
     _kStepSize * 0.866025; // Triangle height. sqrt(3.0) / 2.0
 
@@ -382,7 +382,7 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
 
   Widget _buildLine(bool visible) {
     return Container(
-      width: visible ? 1.0 : 0.0,
+      width: visible ? 2.0 : 0.0,
       height: 16.0,
       color: Colors.grey.shade400,
     );
@@ -678,7 +678,7 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
 Widget _buildLabelText(int index) {
   if (widget.steps[index].label != null) {
     return Container(
-      width: 100,  
+      width: 150,  
       child: AnimatedDefaultTextStyle(
         style: _labelStyle(index),
         duration: kThemeAnimationDuration,
@@ -799,7 +799,7 @@ Widget _buildLabelText(int index) {
     final List<Widget> children = <Widget>[
       for (int i = 0; i < widget.steps.length; i += 1) ...<Widget>[
         SizedBox(
-            width: 150,
+            width: 170,
             child: InkResponse(
               onTap: widget.steps[i].state != VivanStepState.disabled
                   ? () {

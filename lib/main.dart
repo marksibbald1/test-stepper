@@ -38,6 +38,7 @@ final List<VivanStep> steps = [
       style: TextStyle(color: Colors.grey),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.center,
     ),
     title: SizedBox.shrink(),
     content: Text("Content for Step 1"),
@@ -50,6 +51,7 @@ final List<VivanStep> steps = [
       style: TextStyle(color: Colors.grey),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.center,
     ),
     title: SizedBox.shrink(),
     content: Text("Test"),
@@ -62,6 +64,7 @@ final List<VivanStep> steps = [
       style: TextStyle(color: Colors.grey),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.center,
     ),
     title: SizedBox.shrink(),
     content: Text("Content for Step 3"),
@@ -73,6 +76,7 @@ final List<VivanStep> steps = [
       "Download recommendations treatment report",
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.center,
     ),
     title: SizedBox.shrink(),
     content: Text("Content for Step 4"),
@@ -122,8 +126,8 @@ final List<VivanStep> steps = [
       alignment: Alignment.center,
       children: <Widget>[
         Container(
-          width: 24,
-          height: 24,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
