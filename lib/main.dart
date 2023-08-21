@@ -30,71 +30,70 @@ class _ExampleState extends State<Example> {
   int _index = 0;
   final activeColor = Color(0xFF000041);
 
-final List<VivanStep> steps = [
-  VivanStep(
-    isActive: false,
-    label: Text(
-      "Checking sequencing data",
-      style: TextStyle(color: Colors.grey),
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.center,
+  final List<VivanStep> steps = [
+    VivanStep(
+      isActive: false,
+      label: Text(
+        "Checking sequencing data",
+        style: TextStyle(color: Colors.grey),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+      ),
+      title: SizedBox.shrink(),
+      content: Text("Content for Step 1"),
+      state: VivanStepState.editing,
     ),
-    title: SizedBox.shrink(),
-    content: Text("Content for Step 1"),
-    state: VivanStepState.editing,
-  ),
-  VivanStep(
-    isActive: false,
-    label: Text(
-      "Sequencing data OK",
-      style: TextStyle(color: Colors.grey),
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.center,
+    VivanStep(
+      isActive: false,
+      label: Text(
+        "Sequencing data OK",
+        style: TextStyle(color: Colors.grey),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+      ),
+      title: SizedBox.shrink(),
+      content: Text("Test"),
+      state: VivanStepState.complete,
     ),
-    title: SizedBox.shrink(),
-    content: Text("Test"),
-    state: VivanStepState.complete,
-  ),
-  VivanStep(
-    isActive: false,
-    label: Text(
-      "Download sequencing report",
-      style: TextStyle(color: Colors.grey),
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.center,
+    VivanStep(
+      isActive: false,
+      label: Text(
+        "Download sequencing report",
+        style: TextStyle(color: Colors.grey),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+      ),
+      title: SizedBox.shrink(),
+      content: Text("Content for Step 3"),
+      state: VivanStepState.editing,
     ),
-    title: SizedBox.shrink(),
-    content: Text("Content for Step 3"),
-    state: VivanStepState.editing,
-  ),
-  VivanStep(
-    isActive: true,
-    label: Text(
-      "Download recommendations treatment report",
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.center,
+    VivanStep(
+      isActive: true,
+      label: Text(
+        "Download recommendations treatment report",
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+      ),
+      title: SizedBox.shrink(),
+      content: Text("Content for Step 4"),
+      state: VivanStepState.complete,
     ),
-    title: SizedBox.shrink(),
-    content: Text("Content for Step 4"),
-    state: VivanStepState.complete,
-  ),
-];
-
+  ];
 
   Widget customIconBuilder(int index, dynamic) {
     final label = steps[index].label as Text;
     final isActive = steps[index].isActive;
-    final customBorderColor = Color(0xFF00BEB9);
+    // final customBorderColor = Color(0xFF00BEB9);
 
     Color iconColor;
     if (label.data?.startsWith("Download") ?? false || isActive) {
       iconColor = activeColor;
     } else {
-      iconColor = Colors.grey;
+      iconColor = Colors.grey[300]!;
     }
 
     Icon icon;

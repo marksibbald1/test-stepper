@@ -424,10 +424,12 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
 
   Color _circleColor(int index) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final vivanColor = Color(0xFF00BEB9);
+    print(colorScheme.primary);
     if (!_isDark()) {
       return widget.steps[index].isActive
-          ? colorScheme.primary
-          : colorScheme.onSurface.withOpacity(0.38);
+          ? vivanColor
+          : colorScheme.onSurface.withOpacity(0.10);
     } else {
       return widget.steps[index].isActive
           ? colorScheme.secondary
