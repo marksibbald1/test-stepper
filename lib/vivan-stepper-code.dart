@@ -2,21 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'material.dart';
-import 'package:flutter/widgets.dart';
-
-import 'button_style.dart';
-import 'color_scheme.dart';
-import 'colors.dart';
-import 'debug.dart';
-import 'icons.dart';
-import 'ink_well.dart';
-import 'material.dart';
-import 'material_localizations.dart';
-import 'material_state.dart';
-import 'text_button.dart';
-import 'text_theme.dart';
-import 'theme.dart';
+import 'package:flutter/material.dart';
 
 // TODO(dragostis): Missing functionality:
 //   * mobile horizontal mode with adding/removing steps
@@ -803,38 +789,37 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
         SizedBox(
           width: 162,
           child: GestureDetector(
-              onTap: widget.steps[i].state != VivanStepState.disabled
-                  ? () {
-                      widget.onStepTapped?.call(i);
-                    }
-                  : null,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: _isLabel() ? 140.0 : 72.0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment:
-                          CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          color: Colors.red,
-                          child: SizedBox(
-                            height: 24.0,
-                          ),
+            onTap: widget.steps[i].state != VivanStepState.disabled
+                ? () {
+                    widget.onStepTapped?.call(i);
+                  }
+                : null,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: _isLabel() ? 140.0 : 72.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        color: Colors.red,
+                        child: SizedBox(
+                          height: 24.0,
                         ),
-                        Center(child: _buildIcon(i)),
-                        if (widget.steps[i].label != null)
-                          SizedBox(
-                            height: 34.0,
-                            child: _buildLabelText(i),
-                          ),
-                      ],
-                    ),
+                      ),
+                      Center(child: _buildIcon(i)),
+                      if (widget.steps[i].label != null)
+                        SizedBox(
+                          height: 34.0,
+                          child: _buildLabelText(i),
+                        ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
           ),
         ),
         if (!_isLast(i))

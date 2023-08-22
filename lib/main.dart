@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:stepper_example_app/vivan_stepper.dart';
+import 'vivan-stepper-code.dart';
 
 void main() => runApp(const ExampleApp());
 
@@ -74,7 +74,7 @@ class _ExampleState extends State<Example> {
     VivanStep(
       isActive: true,
       label: Text(
-        "Download recommendations treatment report",
+        "Download treatment report",
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
