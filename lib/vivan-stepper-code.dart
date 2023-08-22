@@ -801,19 +801,22 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
     final List<Widget> children = <Widget>[
       for (int i = 0; i < widget.steps.length; i += 1) ...<Widget>[
         SizedBox(
-            width: 170,
-            child: GestureDetector(
+          width: 162,
+          child: GestureDetector(
               onTap: widget.steps[i].state != VivanStepState.disabled
                   ? () {
                       widget.onStepTapped?.call(i);
                     }
                   : null,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
                     height: _isLabel() ? 140.0 : 72.0,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment:
+                          CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
                           color: Colors.red,
@@ -830,13 +833,10 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsetsDirectional.only(start: 12.0),
-                    child: _buildHeaderText(i),
-                  ),
                 ],
               ),
-            )),
+          ),
+        ),
         if (!_isLast(i))
           Expanded(
             child: Container(

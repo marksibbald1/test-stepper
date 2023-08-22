@@ -28,6 +28,7 @@ class Example extends StatefulWidget {
 
 class _ExampleState extends State<Example> {
   int _index = 0;
+  int? _hoveredIndex;
   final activeColor = Color(0xFF000041);
 
   final List<VivanStep> steps = [
