@@ -87,10 +87,14 @@ class _ExampleState extends State<Example> {
   Widget customIconBuilder(int index, dynamic) {
     final label = steps[index].label as Text;
     final isActive = steps[index].isActive;
-    // final customBorderColor = Color(0xFF00BEB9);
+    bool shouldEnableHover = label.data?.startsWith("Download") ?? false;
 
     Color iconColor;
-    if (label.data?.startsWith("Download") ?? false || isActive) {
+    if (_hoveredIndex == index && shouldEnableHover) {
+      iconColor = Color(0xFF00BEB9); // hover color
+    } else if (isActive) {
+      iconColor = Colors.grey[300]!; // color for active icon
+    } else if (label.data?.startsWith("Download") ?? false) {
       iconColor = activeColor;
     } else {
       iconColor = Colors.grey[300]!;
@@ -124,24 +128,34 @@ class _ExampleState extends State<Example> {
     final iconWidget = Stack(
       alignment: Alignment.center,
       children: <Widget>[
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
+        if (!isActive)
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
           ),
-        ),
         icon,
       ],
     );
 
-    return isActive
-        ? iconWidget
-        : MouseRegion(
-            onHover: (event) {},
+    return shouldEnableHover
+        ? MouseRegion(
+            onEnter: (_) {
+              setState(() {
+                _hoveredIndex = index;
+              });
+            },
+            onExit: (_) {
+              setState(() {
+                _hoveredIndex = null;
+              });
+            },
             child: iconWidget,
-          );
+          )
+        : iconWidget;
   }
 
   @override

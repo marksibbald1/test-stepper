@@ -424,8 +424,7 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
 
   Color _circleColor(int index) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final vivanColor = Color(0xFF00BEB9);
-    print(colorScheme.primary);
+    final vivanColor = Color(0xFF000041);
     if (!_isDark()) {
       return widget.steps[index].isActive
           ? vivanColor
@@ -677,19 +676,19 @@ class _StepperState extends State<VivanStepper> with TickerProviderStateMixin {
     );
   }
 
-Widget _buildLabelText(int index) {
-  if (widget.steps[index].label != null) {
-    return Container(
-      width: 150,  
-      child: AnimatedDefaultTextStyle(
-        style: _labelStyle(index),
-        duration: kThemeAnimationDuration,
-        child: widget.steps[index].label!,
-      ),
-    );
+  Widget _buildLabelText(int index) {
+    if (widget.steps[index].label != null) {
+      return Container(
+        width: 150,
+        child: AnimatedDefaultTextStyle(
+          style: _labelStyle(index),
+          duration: kThemeAnimationDuration,
+          child: widget.steps[index].label!,
+        ),
+      );
+    }
+    return const SizedBox.shrink();
   }
-  return const SizedBox.shrink();
-}
 
   Widget _buildVerticalHeader(int index) {
     return Container(
@@ -798,17 +797,17 @@ Widget _buildLabelText(int index) {
   }
 
   Widget _buildHorizontal() {
+    int? _hoveredStepIndex;
     final List<Widget> children = <Widget>[
       for (int i = 0; i < widget.steps.length; i += 1) ...<Widget>[
         SizedBox(
             width: 170,
-            child: InkResponse(
+            child: GestureDetector(
               onTap: widget.steps[i].state != VivanStepState.disabled
                   ? () {
                       widget.onStepTapped?.call(i);
                     }
                   : null,
-              canRequestFocus: widget.steps[i].state != VivanStepState.disabled,
               child: Row(
                 children: <Widget>[
                   SizedBox(
@@ -816,10 +815,12 @@ Widget _buildLabelText(int index) {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        if (widget.steps[i].label != null)
-                          const SizedBox(
+                        Container(
+                          color: Colors.red,
+                          child: SizedBox(
                             height: 24.0,
                           ),
+                        ),
                         Center(child: _buildIcon(i)),
                         if (widget.steps[i].label != null)
                           SizedBox(
